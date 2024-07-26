@@ -1,10 +1,15 @@
 import os
 import re
+import sqlite3
+import webbrowser
 from playsound import playsound
 from engine.command import speak
 from engine.config import ASSISTANT_NAME
 import pywhatkit as kit
 import eel 
+
+con = sqlite3.connect("voyage.db")
+cursor = con.cursor()
 
 # Assistant Sound
 @eel.expose
@@ -45,44 +50,33 @@ def SearchGoogle(query):
 
 def openCommand(query):
     query = query.replace(ASSISTANT_NAME, "").replace("open", "").lower().strip()
-    
-    # Standardize common application names
-    app_dict = {
-        "google chrome": "Google Chrome",
-        "safari": "Safari",
-        "firefox": "Firefox",
-        "spotify": "Spotify",
-        "notes": "Notes",
-        "mail": "Mail",
-        "male": "Mail",
-        "calendar": "Calendar",
-        "whatsapp": "WhatsApp",
-        "maps": "Maps",
-        "photos": "Photos",
-        "dictionary": "Dictionary",
-        "preview": "Preview",
-        "siri": "Siri",
-        "apple tv": "TV",
-        "settings": "System Preferences", 
-        "microsoft teams": "Microsoft Teams",
-        "obsidian": "Obsidian",
-        "sticker": "Stickies",
-        "chess": "Chess",
-        "clock": "Clock",
-        "facetime": "FaceTime",
-        "weather": "Weather",
-        "anaconda": "Anaconda-Navigator",
-        "v s code": "Visual Studio Code",
-        "vs code": "Visual Studio Code",
-        "virtual studio code": "Visual Studio Code",
-        "pycharm": "PyCharm",
-        "figma": "Figma",
-    }
 
-    if query in app_dict:
-        app_name = app_dict[query]
-        speak("Opening " + app_name)
-        os.system('open -a "' + app_name + '"')
-    else:
-        speak("Application not found")
-        print("Application not found: " + query)
+    if open != "":
+        try:
+            cursor.execute(
+                'SELECT path FROM sys_command WHERE name IN (?)',(query,)
+            )
+            results = cursor.fetchall()
+
+            if len(results) != 0:
+                speak("Opening "+query)
+                os.system('open -a "' + results[0][0] + '"')
+
+            elif len(results) == 0:
+                cursor.execute(
+                'SELECT url FROM web_command WHERE name IN (?)',(query,)
+                )
+                results = cursor.fetchall()
+
+                if len(results) != 0:
+                    speak("Opening "+query)
+                    eel.DisplayMessage("Opening "+query)
+                    webbrowser.open(results[0][0])
+
+                else:
+                    speak("URL not found.")
+                    eel.DisplayMessage("URL not found.")
+
+        except:
+            speak("Path or URL not in database.")
+            eel.DisplayMessage("Path or URL not in database.")
