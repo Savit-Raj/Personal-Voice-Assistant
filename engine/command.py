@@ -66,22 +66,59 @@ def allCommands():
 
     try:
         query = takeCommand()
-        print(query)
 
         if "open" in query:
             from engine.features import openCommand
             openCommand(query)
+
         elif "on youtube" in query:
             from engine.features import PlayYoutube
             PlayYoutube(query)
+
         elif "on google" in query:
             from engine.features import SearchGoogle
             SearchGoogle(query)
+
+        elif "call" in query:
+            from engine.features import findContact
+            from engine.features import whatsApp
+            if 'video call' in query:
+                message = 'video'
+                contact_no, name = findContact(query)
+                if contact_no != '0':
+                    whatsApp(contact_no, query, message, name)
+                else:
+                    eel.DisplayMessage("Contact not found")
+                    speak("Contact not found")
+            else:
+                message = 'voice'
+                contact_no, name = findContact(query)
+                if contact_no != '0':
+                    whatsApp(contact_no, query, message, name)
+                else:
+                    eel.DisplayMessage("Contact not found")
+                    speak("Contact not found")
+
+        elif "whatsapp" in query:
+            from engine.features import findContact
+            from engine.features import whatsApp
+            message = 'whatsapp'
+            contact_no, name = findContact(query)
+            if contact_no != '0' and name!= '0':
+                eel.DisplayMessage("Please speak the Whatsapp message.")
+                speak("Please speak the Whatsapp message.")
+                query = takeCommand()
+                speak("Whatsapping "+name)
+                whatsApp(contact_no, query, message, name)
+                
+            else:
+                speak("Contact not found")
+
         else:
             speak("Sorry, didn't get you.")
             eel.DisplayMessage("Sorry, didn't get you.")
 
-    except:
-        print("Error")
+    except Exception as ee:
+        print(ee)
 
     eel.ShowHood()

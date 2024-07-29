@@ -26,3 +26,17 @@ cursor.execute(query)
 # cursor.execute('SELECT path FROM sys_command WHERE name IN (?)',(open,))
 # result = cursor.fetchall()
 # print(result[0][0])
+
+query = "CREATE TABLE IF NOT EXISTS contacts(id integer primary key, name VARCHAR(255), mobile_no VARCHAR(255))"
+cursor.execute(query)
+
+# query = "INSERT INTO contacts VALUES (null, 'papa', '7903416759')"
+# cursor.execute(query)
+# con.commit()
+
+# query = 'papa'
+# query = query.strip().lower()
+
+# cursor.execute("SELECT mobile_no FROM contacts WHERE LOWER(name) LIKE ? OR LOWER(name) LIKE ?", ('%' + query + '%', query + '%'))
+# results = cursor.fetchall()
+# print(results[0][0])
