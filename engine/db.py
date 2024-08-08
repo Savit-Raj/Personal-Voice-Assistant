@@ -30,9 +30,9 @@ cursor.execute(query)
 query = "CREATE TABLE IF NOT EXISTS contacts(id integer primary key, name VARCHAR(255), mobile_no VARCHAR(255))"
 cursor.execute(query)
 
-# query = "INSERT INTO contacts VALUES (null, 'papa', '7903416759')"
-# cursor.execute(query)
-# con.commit()
+query = "INSERT INTO contacts VALUES (null, 'pranav', '9693169743')"
+cursor.execute(query)
+con.commit()
 
 # query = 'papa'
 # query = query.strip().lower()

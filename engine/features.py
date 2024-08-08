@@ -155,7 +155,7 @@ def findContact(query):
         return mobile_no_str, query
     
     except:
-        speak('Contact Does not Exist please')
+        speak('Contact Does not Exist')
         return '0' , '0'
     
 
@@ -166,7 +166,7 @@ def whatsApp(mobile_no, message, flag, name):
         whatsapp_url = f"whatsapp://send?phone={mobile_no}&text={encoded_message}"
         full_command = f'open "{whatsapp_url}"'
         subprocess.run(full_command, shell=True)
-        time.sleep(1)
+        time.sleep(2)
         os.system('osascript -e \'tell application "System Events" to keystroke return\'')
         eel.DisplayMessage("Message sent to "+ name)
         speak("Message sent to "+ name)
