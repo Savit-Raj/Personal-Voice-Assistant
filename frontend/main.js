@@ -58,8 +58,6 @@ $(document).ready(function () {
 
     function PlayAssistant(message) {
         if (message != "") {
-            $("#Oval").attr("hidden", true);
-            $("#SiriWave").attr("hidden", false);
             eel.allCommands(message);
             $("#chatbox").val("")
             $("#MicBtn").attr("hidden", false);

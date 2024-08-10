@@ -10,6 +10,7 @@ def speak(text):
         tts.save("output.mp3")
         os.system("afplay output.mp3")  # Use afplay to play the audio on macOS
         eel.DisplayMessage(text)
+        eel.receiverText(text)
     else:
         print("No text to speak")
         eel.DisplayMessage("No text to speak")
@@ -56,6 +57,7 @@ def takeCommand():
         print(f"Error: {str(e)}")
         eel.DisplayMessage("An error occurred")
         speak("Sorry, can not help.")
+        
         eel.ToggleVisibility()
         return ""
     
@@ -66,8 +68,10 @@ def allCommands(message = 1):
 
     if message ==1:
         query = takeCommand()
+        eel.senderText(query)
     else:
         query = message
+        eel.senderText(query)
 
     try:
 
