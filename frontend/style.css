@@ -179,7 +179,7 @@ body {
 
 .receiver_message {
     padding: 8px;
-    bottom: 2px solid cyan;
+    border: 2px solid cyan;
     border-radius: 0px 15px 15px 20px;
     width: auto;
     color: white;
@@ -188,11 +188,11 @@ body {
 
 .sender_message {
     padding: 8px;
-    border: 1px solid #0045ff;
+    border: 2px solid #0045ff;
     border-radius: 0px 15px 15px 20px;
     width: auto;
     color: white;
-    background-color: #0045ff;
+    background-color: #0dcaf014;
 }
 
 .width-size {

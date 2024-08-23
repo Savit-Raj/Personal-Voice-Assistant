@@ -5,6 +5,7 @@ import eel
 import time
 
 def speak(text):
+    text = str(text)
     if text:
         tts = gTTS(text=text, lang='en')
         tts.save("output.mp3")
@@ -123,8 +124,8 @@ def allCommands(message = 1):
                 speak("Contact not found")
 
         else:
-            speak("Sorry, didn't get you.")
-            eel.DisplayMessage("Sorry, didn't get you.")
+            from engine.features import chatBot
+            chatBot(query)
 
     except Exception as ee:
         print(ee)

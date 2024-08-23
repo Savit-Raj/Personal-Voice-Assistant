@@ -1,5 +1,4 @@
 import os
-import re
 import sqlite3
 import struct
 import time
@@ -8,7 +7,6 @@ import webbrowser
 import pyautogui
 from playsound import playsound
 import pyaudio
-import urllib3
 from engine.command import speak
 from engine.config import ASSISTANT_NAME
 import pywhatkit as kit
@@ -16,6 +14,9 @@ import eel
 from engine.helper import *
 import subprocess
 from urllib.parse import quote
+from hugchat import hugchat
+from hugchat.login import Login
+from engine.config import Email, pswd
 
 con = sqlite3.connect("voyage.db")
 cursor = con.cursor()
@@ -166,9 +167,8 @@ def whatsApp(mobile_no, message, flag, name):
         whatsapp_url = f"whatsapp://send?phone={mobile_no}&text={encoded_message}"
         full_command = f'open "{whatsapp_url}"'
         subprocess.run(full_command, shell=True)
-        time.sleep(2)
+        time.sleep(4)
         os.system('osascript -e \'tell application "System Events" to keystroke return\'')
-        eel.DisplayMessage("Message sent to "+ name)
         speak("Message sent to "+ name)
 
     else:
@@ -185,3 +185,16 @@ def whatsApp(mobile_no, message, flag, name):
 
         full_command = f'open "{whatsapp_url}"'
         subprocess.run(full_command, shell=True)
+
+
+def chatBot(query):
+    cookie_path_dir = "./cookies/" 
+    sign = Login(Email, pswd)
+    cookies = sign.login(cookie_dir_path=cookie_path_dir, save_cookies=True)
+    chatbot = hugchat.ChatBot(cookies=cookies.get_dict()) 
+    message_result = chatbot.chat(query)
+    speak(message_result)
+    return message_result
+
+
+
