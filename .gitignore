@@ -1,7 +1,8 @@
-/__pycahe__
-/cookies
-/engine/db.py
-/engine/__pycahe__
-/Voyage
-/voyage.db
-/engine/config.py
+__pycache__
+cookies
+engine/db.py
+engine/__pycache__
+Voyage
+voyage.db
+engine/config.py
+output.mp3
